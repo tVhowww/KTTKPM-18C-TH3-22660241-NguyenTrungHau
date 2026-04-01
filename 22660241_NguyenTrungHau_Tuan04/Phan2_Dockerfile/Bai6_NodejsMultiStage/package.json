@@ -1,0 +1,11 @@
+{
+  "name": "multi-stage-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'Đang build source code...' && mkdir -p dist && cp index.js dist/",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

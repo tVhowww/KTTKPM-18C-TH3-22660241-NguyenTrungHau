@@ -1,0 +1,11 @@
+{
+  "name": "my-react-app",
+  "version": "1.0.0",
+  "description": "Simple React App for Docker",
+  "scripts": {
+    "start": "serve -s public -p 3000"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
