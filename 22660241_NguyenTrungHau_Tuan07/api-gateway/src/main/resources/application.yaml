@@ -1,0 +1,57 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      # --- CẤU HÌNH CORS CHO FRONTEND ---
+      globalcors:
+        add-to-chain: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: false
+
+      server:
+        webflux:
+          # --- CẤU HÌNH ROUTES NGANG HÀNG VỚI GLOBALCORS ---
+          routes:
+            # 1. Route cho Movie Service
+            - id: movie-service
+              uri: lb://MOVIE-SERVICE
+              predicates:
+                - Path=/api/movies/**
+
+            # 2. Route cho User Service
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/users/**, /register, /login
+
+            # 3. Route cho Booking Service
+            - id: booking-service
+              uri: lb://BOOKING-SERVICE
+              predicates:
+                - Path=/api/bookings/**
+
+            # 4. Route cho Payment Service
+            - id: payment-service
+              uri: lb://PAYMENT-SERVICE
+              predicates:
+                - Path=/api/payments/**
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://172.16.54.193:8761/eureka/
