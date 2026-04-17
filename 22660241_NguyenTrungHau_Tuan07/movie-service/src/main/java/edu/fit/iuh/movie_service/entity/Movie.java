@@ -29,6 +29,10 @@ public class Movie {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @NotBlank(message = "URL hình ảnh không được để trống")
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @NotNull(message = "Thời lượng phim không được để trống")
     @Min(value = 1, message = "Thời lượng phim phải lớn hơn 0 phút")
     @Column(name = "duration_minutes")

@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movies")
-@CrossOrigin("*")
 public class MovieController {
 
     @Autowired
@@ -28,5 +27,15 @@ public class MovieController {
     public ResponseEntity<Movie> addMovie(@Valid @RequestBody Movie movie) {
         Movie savedMovie = movieService.createMovie(movie);
         return new ResponseEntity<>(savedMovie, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
+        Movie movie = movieService.getMovieById(id);
+        if (movie != null) {
+            return ResponseEntity.ok(movie);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

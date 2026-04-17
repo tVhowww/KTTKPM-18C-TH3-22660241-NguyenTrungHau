@@ -22,4 +22,9 @@ public class MovieService {
     public Movie createMovie(Movie movie) {
         return movieRepository.save(movie);
     }
+
+    // Lấy 1 phim
+    public Movie getMovieById(Long id) {
+        return movieRepository.findById(id).orElse(null);
+    }
 }

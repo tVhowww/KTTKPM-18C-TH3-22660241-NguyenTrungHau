@@ -2,25 +2,18 @@ server:
   port: 8888
 
 spring:
+  main:
+    web-application-type: reactive
+
   application:
     name: api-gateway
+
+  boot:
+    admin:
+      context-path: /dashboard
+
   cloud:
     gateway:
-      # --- CẤU HÌNH CORS CHO FRONTEND ---
-      globalcors:
-        add-to-chain: true
-        cors-configurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders: "*"
-            allowCredentials: false
-
       server:
         webflux:
           # --- CẤU HÌNH ROUTES NGANG HÀNG VỚI GLOBALCORS ---
@@ -49,9 +42,32 @@ spring:
               predicates:
                 - Path=/api/payments/**
 
+          #      # --- CẤU HÌNH CORS CHO FRONTEND ---
+          global-cors:
+            cors-configurations:
+                '[/**]':
+                    allowedOriginPatterns: "*"
+                    allowedMethods:
+                    - GET
+                    - POST
+                    - PUT
+                    - DELETE
+                    - OPTIONS
+                    allowedHeaders: "*"
+                    allowCredentials: true
+
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://172.16.54.193:8761/eureka/
+      defaultZone: http://172.20.35.147:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Mở tất cả các cổng giám sát (health, info, metrics, gateway...)
+  endpoint:
+    health:
+      show-details: always
