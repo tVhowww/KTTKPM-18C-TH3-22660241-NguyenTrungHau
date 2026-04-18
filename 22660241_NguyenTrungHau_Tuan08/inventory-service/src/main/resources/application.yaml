@@ -1,0 +1,26 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: inventory-service
+  data:
+    redis:
+      host: 172.16.33.169
+      port: 6379
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://172.16.33.175:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # Cho phép Dashboard quét dữ liệu
+  endpoint:
+    health:
+      show-details: always
