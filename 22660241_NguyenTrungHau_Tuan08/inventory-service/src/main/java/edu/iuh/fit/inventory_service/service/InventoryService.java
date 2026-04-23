@@ -10,6 +10,7 @@ public class InventoryService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    // Use string serializer consistently for integers
     private static final String STOCK_KEY_PREFIX = "stock:";
 
     // Lấy tồn kho
@@ -27,14 +28,15 @@ public class InventoryService {
     public boolean deductStock(Long productId, int quantity) {
         String key = STOCK_KEY_PREFIX + productId;
 
-        // Decrement là thao tác nguyên tử, giải quyết bài toán đồng thời (Concurrency)
         Long newStock = redisTemplate.opsForValue().decrement(key, quantity);
 
         if (newStock != null && newStock >= 0) {
             return true; // Trừ thành công
         } else {
             // Nếu bị âm (mua lố), trả lại hàng bằng increment (Rollback)
-            redisTemplate.opsForValue().increment(key, quantity);
+            if (newStock != null) {
+                redisTemplate.opsForValue().increment(key, quantity);
+            }
             return false;
         }
     }
