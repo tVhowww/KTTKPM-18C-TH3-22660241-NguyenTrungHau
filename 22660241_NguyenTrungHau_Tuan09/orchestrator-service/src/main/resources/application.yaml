@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: orchestrator-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.16.33.175:8761/eureka/
+
+services:
+  user: http://172.16.33.170:8081/api/users
+  tour: http://172.16.33.163:8082/api/tours
+  booking: http://172.16.33.169:8083/api/bookings
+  payment: http://172.16.33.175:8084/api/payments

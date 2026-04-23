@@ -17,29 +17,33 @@ spring:
       server:
         webflux:
           routes:
-            # PU1: Product Processing Unit
-            - id: product-service
-              uri: lb://PRODUCT-SERVICE
+            # Route số 1: Orchestrator Service (Luồng đặt tour trung tâm)
+            - id: orchestrator-service
+              uri: lb://ORCHESTRATOR-SERVICE
               predicates:
-                - Path=/api/products/**
+                - Path=/api/book-tour/**
 
-            # PU2: Cart Processing Unit
-            - id: cart-service
-              uri: lb://CART-SERVICE
+            # Route số 2: User Service (Cho Frontend gọi Login)
+            - id: user-service
+              uri: lb://USER-SERVICE
               predicates:
-                - Path=/api/cart/**
+                - Path=/login, /api/users/**
 
-            # PU3: Order Processing Unit
-            - id: order-service
-              uri: lb://ORDER-SERVICE
+            # Route số 3: Tour Service (Cho Frontend gọi xem danh sách)
+            - id: tour-service
+              uri: lb://TOUR-SERVICE
               predicates:
-                - Path=/api/checkout/**, /api/orders/**
+                - Path=/api/tours/**
 
-            # PU4: Inventory Processing Unit
-            - id: inventory-service
-              uri: lb://INVENTORY-SERVICE
+            - id: payment-service
+              uri: lb://PAYMENT-SERVICE
               predicates:
-                - Path=/api/stock/**
+                - Path=/api/payments/**
+
+            - id: booking-service
+              uri: lb://BOOKING-SERVICE
+              predicates:
+                - Path=/api/bookings/**
 
           # --- CẤU HÌNH CORS CHO FRONTEND ---
           global-cors:

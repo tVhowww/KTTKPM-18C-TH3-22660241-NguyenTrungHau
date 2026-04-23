@@ -6,7 +6,7 @@ spring:
     name: inventory-service
   data:
     redis:
-      host: 192.168.1.69
+      host: 172.16.33.163
       port: 6379
 
 eureka:
@@ -14,7 +14,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://192.168.1.82:8761/eureka/
+      defaultZone: http://172.16.33.175:8761/eureka/
 
 management:
   endpoints:
